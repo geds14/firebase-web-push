@@ -1,0 +1,63 @@
+<html>
+	<head>
+		<title>
+			Firebase - Client APP
+		</title>
+	</head>
+	<body>
+		<h1>Push Notification Recipient<h1>
+		<p id="token"></p>
+		<script src="https://www.gstatic.com/firebasejs/7.18.0/firebase-app.js"></script>
+		<script src="https://www.gstatic.com/firebasejs/7.18.0/firebase-messaging.js"></script>
+		<script>
+			  var firebaseConfig = {
+				apiKey: "AIzaSyB3lXeGQi4j2-VrWoE6_zxqmVQZ3R3cm1k",
+				authDomain: "mytestproject-40ba1.firebaseapp.com",
+				databaseURL: "https://mytestproject-40ba1.firebaseio.com",
+				projectId: "mytestproject-40ba1",
+				storageBucket: "mytestproject-40ba1.appspot.com",
+				messagingSenderId: "620166299438",
+				appId: "1:620166299438:web:b543b1634ad35fccc484bf",
+				measurementId: "G-5T5T4LCJJG"
+			  };
+			  // Initialize Firebase
+			  firebase.initializeApp(firebaseConfig);
+			  const messaging = firebase.messaging();
+			  
+			  function InitializeFireBaseMessaging(){
+				messaging
+					.requestPermission()
+					.then(function(){
+						console.log("Notification Permission.");
+						return messaging.getToken();
+					})
+					.then(function(token){
+						console.log("Token : " +token);
+						document.getElementById("token").innerHTML=token;
+					})
+					.catch(function(reason){
+						console.log(reason);
+					});
+			  }
+			  
+			  messaging.onMessage(function(payload){
+				console.log(payload);
+			  });
+			  
+			  messaging.onTokenRefresh(function(){
+				messaging.getToken()
+					.then(function(newToken){
+						console.log("New Token: "+newToken);
+					})
+					.catch(function(reason){
+						console.log(reason);
+					});
+			  })
+			  
+			  InitializeFireBaseMessaging();
+			  
+		</script>
+	</body>
+</html>
+
+
