@@ -46,7 +46,7 @@
                 const notificationMessage={
                     body:payload.body,
                     title:payload.title,
-                    click_option:payload.click_option
+                    click_action:payload.click_action
                 };
 
                 if(Notification.permission==="granted"){
@@ -54,7 +54,7 @@
 
                     notification.onclick=function (ev){
                         ev.preventDefault();
-                        window.open(payload.notification.click_option);
+                        window.open(payload.notification.click_action, '_blank');
                         notification.close();
                     }
                 }
